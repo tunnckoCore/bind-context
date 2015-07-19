@@ -87,4 +87,20 @@ test('bind-context:', function () {
     test.equal(fn.name, 'set')
     done()
   })
+  test('should have proper .toString method', function (done) {
+    function foo () {
+      return this.foo ? this.foo : false
+    }
+
+    var fn = bindContext(foo, {foo: 'bar'})
+    var actual = fn()
+    var expected = 'bar'
+
+    test.equal(fn.name, 'foo')
+    test.equal(actual, expected)
+    test.equal(typeof fn.toString, 'function')
+    test.ok(fn.toString().indexOf('function foo ()') !== -1)
+    test.ok(fn.toString().indexOf('return this.foo') !== -1)
+    done()
+  })
 })
