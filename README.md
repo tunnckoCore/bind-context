@@ -17,6 +17,34 @@ npm test
 
 ```js
 var bindContext = require('bind-context')
+
+function get () {
+  // this context is {foo: 'bar'}
+  return this.foo
+}
+
+// just returns same function
+// as regular `.bind`, but also
+// preserves the name of given function 
+var _get = bind(get, {foo: 'bar'})
+
+console.log(_get.name) //=> 'get'
+console.log(_get()) //=> 'bar'
+```
+
+Whole problem and idea behind that packages is that `.bind`, `.apply` and `.call` native
+methods eats the name of given function. With that package the name property is preserved
+and also you can use it to set new name.
+
+**Example**
+
+```js
+var bindContext = require('bind-context')
+
+function app () {}
+var _app = bind('custom', app)
+
+console.log(_app.name) //=> 'custom'
 ```
 
 
