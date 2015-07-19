@@ -15,5 +15,21 @@
   "devDependencies": {
     "assertit": "^0.1.0"
   },
-  "keywords": []
+  "keywords": [
+    "bind",
+    "bound",
+    "context",
+    "control",
+    "ctx",
+    "fn",
+    "function",
+    "handle",
+    "name",
+    "preserve",
+    "safe",
+    "save",
+    "tool",
+    "tostring",
+    "util"
+  ]
 }
