@@ -48,6 +48,13 @@ console.log(_app.name) //=> 'custom'
 ```
 
 
+## Related
+- [benz](https://github.com/tunnckocore/benz): Compose your control flow with absolute elegance. Support async/await, callbacks,… [more](https://github.com/tunnckocore/benz)
+- [fn.name](https://github.com/bigpipe/fn.name): Extract names from functions
+- [useware](https://github.com/tunnckocore/useware): Accept Arguments object or multiple arguments that can be any… [more](https://github.com/tunnckocore/useware)
+- [vez](https://github.com/tunnckocore/vez): Middleware composition at new level. Ultimate alternative to `ware`, `plugins`,… [more](https://github.com/tunnckocore/vez)
+
+
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/bind-context/issues/new).  
 But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guidelines.
