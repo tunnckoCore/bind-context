@@ -59,6 +59,19 @@ test('bind-context:', function () {
     test.equal(fn.name, 'foobar')
     done()
   })
+  test('should just change name of given function without setting context', function (done) {
+    function app () {
+      test.equal(this, undefined)
+      return 'abc'
+    }
+
+    var fn = bindContext('custom', app)
+    test.equal(typeof fn, 'function')
+    test.equal(typeof fn.toString, 'function')
+    test.equal(fn.name, 'custom')
+    test.equal(fn(), 'abc')
+    done()
+  })
   test('should accept name, fn and context as 3rd argument', function (done) {
     function fixture () {
       test.deepEqual(this, {foo: 'bar'})
