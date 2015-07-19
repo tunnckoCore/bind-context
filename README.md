@@ -26,7 +26,7 @@ function get () {
 // just returns same function
 // as regular `.bind`, but also
 // preserves the name of given function 
-var _get = bind(get, {foo: 'bar'})
+var _get = bindContext(get, {foo: 'bar'})
 
 console.log(_get.name) //=> 'get'
 console.log(_get()) //=> 'bar'
@@ -42,7 +42,7 @@ and also you can use it to set new name.
 var bindContext = require('bind-context')
 
 function app () {}
-var _app = bind('custom', app)
+var _app = bindContext('custom', app)
 
 console.log(_app.name) //=> 'custom'
 ```
