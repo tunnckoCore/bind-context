@@ -9,9 +9,18 @@
 
 'use strict'
 
-// var test = require('assertit')
+var test = require('assertit')
 var bindContext = require('./index')
 var util = require('util')
+
+test('should throw TypeError if not a function', function (done) {
+  function fixture () {
+    bindContext(123)
+  }
+  test.throws(fixture, TypeError)
+  test.throws(fixture, /expect a function/)
+  done()
+})
 
 function hello () {
   // `this` context is `{foo: 'bar'}`
