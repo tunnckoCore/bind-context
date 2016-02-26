@@ -26,6 +26,8 @@
     "bind",
     "bind-context",
     "bound",
+    "change",
+    "change-name",
     "context",
     "control",
     "ctx",
@@ -37,6 +39,9 @@
     "new",
     "new-name",
     "preserve",
+    "re",
+    "re-name",
+    "rename",
     "safe",
     "save",
     "set",
@@ -44,6 +49,7 @@
     "string",
     "tool",
     "tostring",
+    "transform",
     "util"
   ],
   "verb": {
