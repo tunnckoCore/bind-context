@@ -16,6 +16,35 @@ npm i bind-context --save
 const bindContext = require('bind-context')
 ```
 
+### [bindContext](index.js#L44)
+> Bind context to a function and preserve her name.
+
+**Params**
+
+* `name` **{String|Function}**: Name for the new function or function which to use.    
+* `fn` **{Object|Function=}**: Function to bind context to.    
+* `ctx` **{Object=}**: The context to pass to function, or `this` is used if set.    
+* `returns` **{Function}**: New function which will have `ctx` bound and correct `.toString`.  
+
+**Example**
+
+```js
+var bindContext = require('bind-context')
+
+function get () {
+  // `this` context is `{foo: 'bar'}`
+  return this.foo
+}
+
+// just returns same function
+// as regular `.bind`, but also
+// preserves the name of given function
+var _get = bindContext(get, {foo: 'bar'})
+
+console.log(_get.name) //=> 'get'
+console.log(_get()) //=> 'bar'
+```
+
 ## Related
 * [async-control](https://www.npmjs.com/package/async-control): Ultimate asynchronous control flow goodness with built-in hook system and compose,… [more](https://www.npmjs.com/package/async-control) | [homepage](https://github.com/hybridables/async-control)
 * [function-equal](https://www.npmjs.com/package/function-equal): Compares two functions, are they equal? Checks their names, bodies and… [more](https://www.npmjs.com/package/function-equal) | [homepage](https://github.com/tunnckocore/function-equal)

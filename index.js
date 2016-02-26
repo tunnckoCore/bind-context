@@ -12,6 +12,35 @@ var define = require('define-property')
 var format = require('util').format
 var Func = Function // suppress `eslint`, `jshint` and etc
 
+/**
+ * > Bind context to a function and preserve her name.
+ *
+ * **Example**
+ *
+ * ```js
+ * var bindContext = require('bind-context')
+ *
+ * function get () {
+ *   // `this` context is `{foo: 'bar'}`
+ *   return this.foo
+ * }
+ *
+ * // just returns same function
+ * // as regular `.bind`, but also
+ * // preserves the name of given function
+ * var _get = bindContext(get, {foo: 'bar'})
+ *
+ * console.log(_get.name) //=> 'get'
+ * console.log(_get()) //=> 'bar'
+ * ```
+ *
+ * @param  {String|Function} `name` Name for the new function or function which to use.
+ * @param  {Object|Function=} `fn` Function to bind context to.
+ * @param  {Object=} `ctx` The context to pass to function, or `this` is used if set.
+ * @return {Function} New function which will have `ctx` bound and correct `.toString`.
+ * @api public
+ */
+
 module.exports = function bindContext (name, fn, ctx) {
   ctx = typeof fn === 'object' ? fn : ctx
   fn = typeof name === 'function' ? name : fn
