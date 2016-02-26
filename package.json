@@ -51,6 +51,17 @@
     "layout": "empty",
     "tasks": [
       "readme"
-    ]
+    ],
+    "related": {
+      "list": [
+        "useware",
+        "useware-context",
+        "async-control",
+        "parse-function",
+        "letta",
+        "relike",
+        "function-equal"
+      ]
+    }
   }
 }
