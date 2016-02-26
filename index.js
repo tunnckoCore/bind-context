@@ -7,10 +7,11 @@
 
 'use strict'
 
+var namify = require('namify')
 var fnName = require('fn-name')
 var define = require('define-property')
 var format = require('util').format
-var Func = Function // suppress `eslint`, `jshint` and etc
+var Functi = Function // suppress `eslint`, `jshint` and etc
 
 /**
  * > Bind context to a function and preserve her name.
@@ -41,20 +42,20 @@ var Func = Function // suppress `eslint`, `jshint` and etc
  * @api public
  */
 
-module.exports = function bindContext (name, fn, ctx) {
-  ctx = typeof fn === 'object' ? fn : ctx
-  fn = typeof name === 'function' ? name : fn
-  ctx = ctx || this
+module.exports = function bindContext (ctx, fn, name) {
+  name = typeof fn === 'string' ? fn : name
+  fn = typeof ctx === 'function' ? ctx : fn
+  ctx = typeof ctx === 'object' ? ctx : this
+  name = typeof name === 'string' ? name : false
 
   if (typeof fn !== 'function') {
     throw new TypeError('bind-context expect a function')
   }
-
-  name = typeof name === 'string' ? name : false
-  name = name || fnName(fn) || 'anonymous'
+  name = name || getName(fn) || 'anonymous'
+  name = namify(name)
 
   var str = format('return function %s(){return fn.apply(this,arguments)}', name)
-  var func = (new Func('fn', str))(fn.bind(ctx))
+  var func = (new Functi('fn', str))(fn.bind(ctx))
 
   define(func, 'toString', function toString () {
     var named = format('function %s (', name)
@@ -62,4 +63,11 @@ module.exports = function bindContext (name, fn, ctx) {
   })
 
   return func
+}
+
+function getName (val) {
+  val = fnName(val)
+  var name = val ? val.replace(/^bound/, '').trim() : ''
+  val = name && name.length && name || null
+  return val
 }
