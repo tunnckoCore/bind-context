@@ -7,7 +7,8 @@
 
 'use strict'
 
-var fnName = require('fn.name')
+var fnName = require('fn-name')
+var define = require('define-property')
 var format = require('util').format
 var Func = Function // suppress `eslint`, `jshint` and etc
 
@@ -21,15 +22,15 @@ module.exports = function bindContext (name, fn, ctx) {
   }
 
   name = typeof name === 'string' ? name : false
-  name = name || fnName(fn)
+  name = name || fnName(fn) || 'anonymous'
 
   var str = format('return function %s(){return fn.apply(this,arguments)}', name)
   var func = (new Func('fn', str))(fn.bind(ctx))
 
-  func.toString = function toString () {
+  define(func, 'toString', function toString () {
     var named = format('function %s (', name)
     return fn.toString().replace(/^function .*?\(/, named)
-  }
+  })
 
   return func
 }
