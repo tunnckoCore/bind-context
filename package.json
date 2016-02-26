@@ -1,9 +1,10 @@
 {
   "name": "bind-context",
   "version": "1.0.1",
-  "description": "Bind context to the given function and preserves her name. Or set new name of the given function. It also handles `.toString` correctly.",
+  "description": "Bind context to a function and preserves her name. Can be used to change name of a function. The toString also works correctly.",
   "repository": "tunnckoCore/bind-context",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "precommit.silent": true,
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -14,23 +15,42 @@
     "fn-name": "^2.0.1"
   },
   "devDependencies": {
-    "assertit": "^0.1.0"
+    "assertit": "^0.1.0",
+    "pre-commit": "*"
   },
+  "files": [
+    "index.js"
+  ],
   "keywords": [
     "bind",
+    "bind-context",
     "bound",
     "context",
     "control",
     "ctx",
     "fn",
     "function",
-    "handle",
+    "function-name",
+    "get",
     "name",
+    "new",
+    "new-name",
     "preserve",
     "safe",
     "save",
+    "set",
+    "set-name",
+    "string",
     "tool",
     "tostring",
     "util"
-  ]
+  ],
+  "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ]
+  }
 }
