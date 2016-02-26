@@ -19,9 +19,10 @@ var Functi = Function // suppress `eslint`, `jshint` and etc
  * **Example**
  *
  * ```js
+ * var inspect = require('util').inspect
  * var bindContext = require('bind-context')
  *
- * function get () {
+ * function hello () {
  *   // `this` context is `{foo: 'bar'}`
  *   return this.foo
  * }
@@ -29,15 +30,18 @@ var Functi = Function // suppress `eslint`, `jshint` and etc
  * // just returns same function
  * // as regular `.bind`, but also
  * // preserves the name of given function
- * var _get = bindContext(get, {foo: 'bar'})
+ * var hi = bindContext({foo: 'zzz'}, hello, 'bar')
  *
- * console.log(_get.name) //=> 'get'
- * console.log(_get()) //=> 'bar'
+ * console.log(inspect(hi))      // => [Function: bar]
+ * console.log(hi)               // => [Function: bar]
+ * console.log(hi())             // => 'zzz'
+ * console.log(hi.toString())    // => function bar () { ... code ... }
+ * console.log(hi.name)          // => 'bar'
  * ```
  *
- * @param  {String|Function} `name` Name for the new function or function which to use.
- * @param  {Object|Function=} `fn` Function to bind context to.
- * @param  {Object=} `ctx` The context to pass to function, or `this` is used if set.
+ * @param  {Object|Function} `ctx` The context to pass bind or function.
+ * @param  {Function|String=} `fn` Function to bind context to, or new `name` for it.
+ * @param  {String=} `name` Name for the new function (optional, can be used to rename functions).
  * @return {Function} New function which will have `ctx` bound and correct `.toString`.
  * @api public
  */
@@ -65,6 +69,13 @@ module.exports = function bindContext (ctx, fn, name) {
   return func
 }
 
+/**
+ * > Get correct name of a function and clean a bit.
+ *
+ * @param  {Function} `val`
+ * @return {String|null}
+ * @api private
+ */
 function getName (val) {
   val = fnName(val)
   var name = val ? val.replace(/^bound/, '').trim() : ''

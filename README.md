@@ -16,22 +16,23 @@ npm i bind-context --save
 const bindContext = require('bind-context')
 ```
 
-### [bindContext](index.js#L44)
+### [bindContext](index.js#L49)
 > Bind context to a function and preserve her name.
 
 **Params**
 
-* `name` **{String|Function}**: Name for the new function or function which to use.    
-* `fn` **{Object|Function=}**: Function to bind context to.    
-* `ctx` **{Object=}**: The context to pass to function, or `this` is used if set.    
+* `ctx` **{Object|Function}**: The context to pass bind or function.    
+* `fn` **{Function|String=}**: Function to bind context to, or new `name` for it.    
+* `name` **{String=}**: Name for the new function (optional, can be used to rename functions).    
 * `returns` **{Function}**: New function which will have `ctx` bound and correct `.toString`.  
 
 **Example**
 
 ```js
+var inspect = require('util').inspect
 var bindContext = require('bind-context')
 
-function get () {
+function hello () {
   // `this` context is `{foo: 'bar'}`
   return this.foo
 }
@@ -39,10 +40,26 @@ function get () {
 // just returns same function
 // as regular `.bind`, but also
 // preserves the name of given function
-var _get = bindContext(get, {foo: 'bar'})
+var hi = bindContext({foo: 'zzz'}, hello, 'bar')
 
-console.log(_get.name) //=> 'get'
-console.log(_get()) //=> 'bar'
+console.log(inspect(hi))      // => [Function: bar]
+console.log(hi)               // => [Function: bar]
+console.log(hi())             // => 'zzz'
+console.log(hi.toString())    // => function bar () { ... code ... }
+console.log(hi.name)          // => 'bar'
+```
+
+## Signatures
+
+```js
+bindContext.call(Object, Function)          // preserves name
+bindContext.call(Object, Function, String)  // changes name
+
+bindContext(Object, Function)          // preserves name (with context)
+bindContext(Object, Function, String)  // changes name (with context)
+
+bindContext(Function)          // preserves name (no context, saves Function's context if it has)
+bindContext(Function, String)  // changes name (no context, saves Function's context if it has)
 ```
 
 ## Related
@@ -64,6 +81,7 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 [define-property]: https://github.com/jonschlinkert/jonschlinkert/define-property
 [fn-name]: https://github.com/sindresorhus/fn-name
+[namify]: https://github.com/jonschlinkert/namify
 
 [npmjs-url]: https://www.npmjs.com/package/bind-context
 [npmjs-img]: https://img.shields.io/npm/v/bind-context.svg?label=bind-context
