@@ -13,6 +13,11 @@ var test = require('assertit')
 var bindContext = require('./index')
 var util = require('util')
 
+function hello (a) {
+  // `this` context is `{foo: 'bar'}`
+  return this.foo + (a || '')
+}
+
 test('should throw TypeError if not a function', function (done) {
   function fixture () {
     bindContext(123)
@@ -22,224 +27,98 @@ test('should throw TypeError if not a function', function (done) {
   done()
 })
 
-function hello () {
-  // `this` context is `{foo: 'bar'}`
-  return this.foo
-}
+test('should bind passed `ctx` to passed `fn`', function (done) {
+  var aa = bindContext({foo: 'aaa'}, hello)
 
-function Cls () {
-  if (!(this instanceof Cls)) {
-    return new Cls()
+  test.strictEqual(typeof aa, 'function')
+  test.strictEqual(util.inspect(aa), '[Function: hello]')
+  test.strictEqual(aa(), 'aaa')
+  test.strictEqual(aa.toString(), hello.toString())
+  test.strictEqual(aa.name, 'hello')
+  test.strictEqual(aa.name, hello.name)
+  done()
+})
+
+test('should bind `ctx` and rename `fn` to passed `name`', function (done) {
+  var bb = bindContext({foo: 'boo'}, hello, 'barlo')
+
+  test.strictEqual(typeof bb, 'function')
+  test.strictEqual(util.inspect(bb), '[Function: barlo]')
+  test.strictEqual(bb(), 'boo')
+  test.strictEqual(bb.name, 'barlo')
+  test.strictEqual(bb.name !== hello.name, true)
+
+  var helloStr = hello.toString().slice(14)
+  var barloStr = bb.toString().slice(14)
+
+  test.strictEqual(barloStr, helloStr)
+  done()
+})
+
+test('should work to bind context with bindContext.call(ctx, fn)', function (done) {
+  var cc = bindContext.call({foo: 'ccc'}, hello)
+
+  test.strictEqual(typeof cc, 'function')
+  test.strictEqual(util.inspect(cc), '[Function: hello]')
+  test.strictEqual(cc(), 'ccc')
+  test.strictEqual(cc.name, 'hello')
+  test.strictEqual(cc.name === hello.name, true)
+
+  var hi = hello.toString().slice(14)
+  var ci = cc.toString().slice(14)
+
+  test.strictEqual(hi, ci)
+  done()
+})
+
+test('should use previous function context', function (done) {
+  var hi = hello.bind({foo: 'fez'})
+  var ee = bindContext(hi)
+
+  test.strictEqual(typeof ee, 'function')
+  test.strictEqual(util.inspect(ee), '[Function: hello]')
+  test.strictEqual(ee(), 'fez')
+  test.strictEqual(ee.name, 'hello')
+  test.strictEqual(ee.name === hello.name, true)
+
+  var helloStr = hello.toString().slice(14)
+  var boundStr = ee.toString().slice(14) // () { [native code] }
+
+  test.notStrictEqual(helloStr, boundStr)
+  done()
+})
+
+test('should work to give a name of anonymous function', function (done) {
+  var zz = bindContext(function () {}, 'xxx')
+
+  test.strictEqual(typeof zz, 'function')
+  test.strictEqual(util.inspect(zz), '[Function: xxx]')
+  test.strictEqual(zz(), undefined)
+  test.strictEqual(zz.name, 'xxx')
+  done()
+})
+
+test('should work for anonymous function', function (done) {
+  var ww = bindContext(function () {})
+
+  test.strictEqual(typeof ww, 'function')
+  test.strictEqual(util.inspect(ww), '[Function: anonymous]')
+  test.strictEqual(ww(), undefined)
+  test.strictEqual(ww.name, 'anonymous')
+  done()
+})
+
+test('should have proper .toString method', function (done) {
+  function foo () {
+    return this.foo ? this.foo : false
   }
-  return this.foo
-}
 
-var aa = bindContext({foo: 'aaa'}, hello)
-var bb = bindContext({foo: 'bbb'}, hello, 'foo')
+  var fn = bindContext({foo: 'bar'}, foo)
 
-var cc = bindContext.call({foo: 'ccc'}, hello)
-var dd = bindContext.call({foo: 'ddd'}, hello, 'bar')
-
-var hi = hello.bind({foo: 'zaz'})
-var ee = bindContext(hi)         // if function have some ctx, use it
-
-var by = hello.bind({foo: 'bay'})
-var ff = bindContext(by, 'qux')  // if function have some ctx, use it
-
-var gy = Cls
-var gg = bindContext(gy, 'gaz')
-
-var zz = bindContext(function () {}, 'xxx')
-
-var ww = bindContext(function () {})
-
-/**
- * Examples
- */
-
-console.log('===== aa')
-
-console.log(util.inspect(aa)) // => [Function: hello]
-console.log(aa)               // => [Function: hello]
-console.log(aa())             // => 'aaa'
-console.log(aa.toString())    // =>
-console.log(aa.name)          // => 'hello'
-
-console.log('===== bb')
-
-console.log(util.inspect(bb)) // => [Function: foo]
-console.log(bb)               // => [Function: foo]
-console.log(bb())             // => 'bbb'
-console.log(bb.toString())    // =>
-console.log(bb.name)          // => 'foo'
-
-console.log('===== cc')
-
-console.log(util.inspect(cc)) // => [Function: hello]
-console.log(cc)               // => [Function: hello]
-console.log(cc())             // => 'ccc'
-console.log(cc.toString())    // =>
-console.log(cc.name)          // => 'hello'
-
-console.log('===== dd')
-
-console.log(util.inspect(dd)) // => [Function: bar]
-console.log(dd)               // => [Function: bar]
-console.log(dd())             // => 'ddd'
-console.log(dd.toString())    // =>
-console.log(dd.name)          // => 'bar'
-
-console.log('===== ee')
-
-console.log(util.inspect(ee)) // => [Function: hello]
-console.log(ee)               // => [Function: hello]
-console.log(ee())             // => 'zaz'
-console.log(ee.toString())    // =>
-console.log(ee.name)          // => 'hello'
-
-console.log('===== ff ')
-
-console.log(util.inspect(ff)) // => [Function: qux]
-console.log(ff)               // => [Function: qux]
-console.log(ff())             // => 'bay'
-console.log(ff.toString())    // =>
-console.log(ff.name)          // => 'qux'
-
-console.log('===== gg')
-
-console.log(util.inspect(gg)) // => [Function: gaz]
-console.log(gg)               // => [Function: gaz]
-console.log(gg())             // => 'Cls {}'
-console.log(gg.toString())    // =>
-console.log(gg.name)          // => 'gaz'
-
-console.log('===== zz')
-
-console.log(util.inspect(zz)) // => [Function: xxx]
-console.log(zz)               // => [Function: xxx]
-console.log(zz())             // => undefined
-console.log(zz.toString())    // => function xxx () {}
-console.log(zz.name)          // => 'xxx'
-
-console.log('===== ww')
-
-console.log(util.inspect(ww)) // => [Function: anonymous]
-console.log(ww)               // => [Function: anonymous]
-console.log(ww())             // => undefined
-console.log(ww.toString())    // => function anonymous () {}
-console.log(ww.name)          // => 'anonymous'
-
-/**
- * Old tests
- */
-
-// test('should throw TypeError if not function', function (done) {
-//   function fixture () {
-//     bindContext(123)
-//   }
-
-//   test.throws(fixture, TypeError)
-//   test.throws(fixture, /expect a function/)
-//   done()
-// })
-
-// test('should throw TypeError if name and context only', function (done) {
-//   function fixture () {
-//     bindContext('foo', {bar: 'baz'})
-//   }
-
-//   test.throws(fixture, TypeError)
-//   test.throws(fixture, /expect a function/)
-//   done()
-// })
-
-// test('should accept only function and preserve original name', function (done) {
-//   function fn1 () {
-//     test.deepEqual(this, {foo: 'bar'})
-//     return this.foo
-//   }
-
-//   var fn = bindContext.call({foo: 'bar'}, fn1)
-//   var actual = fn()
-//   var expected = 'bar'
-
-//   test.equal(actual, expected)
-//   test.equal(fn.name, 'fn1')
-//   done()
-// })
-
-// test('should accept name and function (change original name)', function (done) {
-//   function fn1 () {
-//     test.deepEqual(this, {a: 'b'})
-//     return this.a
-//   }
-
-//   var fn = bindContext.call({a: 'b'}, 'foobar', fn1)
-//   var actual = fn()
-//   var expected = 'b'
-
-//   test.equal(actual, expected)
-//   test.equal(fn.name, 'foobar')
-//   done()
-// })
-
-// test('should just change name of given function without setting context', function (done) {
-//   function app () {
-//     test.equal(this, undefined)
-//     return 'abc'
-//   }
-
-//   var fn = bindContext('custom', app)
-//   test.equal(typeof fn, 'function')
-//   test.equal(typeof fn.toString, 'function')
-//   test.equal(fn.name, 'custom')
-//   test.equal(fn(), 'abc')
-//   done()
-// })
-
-// test('should accept name, fn and context as 3rd argument', function (done) {
-//   function fixture () {
-//     test.deepEqual(this, {foo: 'bar'})
-//     return this.foo
-//   }
-
-//   var fn = bindContext('abc', fixture, {foo: 'bar'})
-//   var actual = fn()
-//   var expected = 'bar'
-
-//   test.equal(actual, expected)
-//   test.equal(fn.name, 'abc')
-//   done()
-// })
-
-// test('should accept fn and context as 2nd argument', function (done) {
-//   function set () {
-//     test.deepEqual(this, {username: 'tunnckoCore'})
-//     return this.username
-//   }
-
-//   var fn = bindContext(set, {username: 'tunnckoCore'})
-//   var actual = fn()
-//   var expected = 'tunnckoCore'
-
-//   test.equal(actual, expected)
-//   test.equal(fn.name, 'set')
-//   done()
-// })
-
-// test('should have proper .toString method', function (done) {
-//   function foo () {
-//     return this.foo ? this.foo : false
-//   }
-
-//   var fn = bindContext(foo, {foo: 'bar'})
-//   var actual = fn()
-//   var expected = 'bar'
-
-//   test.equal(fn.name, 'foo')
-//   test.equal(actual, expected)
-//   test.equal(typeof fn.toString, 'function')
-//   test.ok(fn.toString().indexOf('function foo ()') !== -1)
-//   test.ok(fn.toString().indexOf('return this.foo') !== -1)
-//   done()
-// })
+  test.equal(typeof fn.toString, 'function')
+  test.equal(fn.name, 'foo')
+  test.equal(fn(), 'bar')
+  test.ok(fn.toString().indexOf('function foo()') !== -1)
+  test.ok(fn.toString().indexOf('return this.foo') !== -1)
+  done()
+})

@@ -62,7 +62,7 @@ module.exports = function bindContext (ctx, fn, name) {
   var func = (new Functi('fn', str))(fn.bind(ctx))
 
   define(func, 'toString', function toString () {
-    var named = format('function %s (', name)
+    var named = format('function %s(', name)
     return fn.toString().replace(/^function .*?\(/, named)
   })
 
