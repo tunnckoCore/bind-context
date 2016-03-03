@@ -71,23 +71,6 @@ test('should work to bind context with bindContext.call(ctx, fn)', function (don
   done()
 })
 
-test('should use previous function context', function (done) {
-  var hi = hello.bind({foo: 'fez'})
-  var ee = bindContext(hi)
-
-  test.strictEqual(typeof ee, 'function')
-  test.strictEqual(util.inspect(ee), '[Function: hello]')
-  test.strictEqual(ee(), 'fez')
-  test.strictEqual(ee.name, 'hello')
-  test.strictEqual(ee.name === hello.name, true)
-
-  var helloStr = hello.toString().slice(14)
-  var boundStr = ee.toString().slice(14) // () { [native code] }
-
-  test.notStrictEqual(helloStr, boundStr)
-  done()
-})
-
 test('should work to give a name of anonymous function', function (done) {
   var zz = bindContext(function () {}, 'xxx')
 
@@ -120,5 +103,22 @@ test('should have proper .toString method', function (done) {
   test.equal(fn(), 'bar')
   test.ok(fn.toString().indexOf('function foo()') !== -1)
   test.ok(fn.toString().indexOf('return this.foo') !== -1)
+  done()
+})
+
+test('should use previous function context', function (done) {
+  var hi = hello.bind({foo: 'fez'})
+  var ee = bindContext(hi)
+
+  test.strictEqual(typeof ee, 'function')
+  test.strictEqual(util.inspect(ee), '[Function: hello]')
+  test.strictEqual(ee(), 'fez')
+  test.strictEqual(ee.name, 'hello')
+  test.strictEqual(ee.name === hello.name, true)
+
+  var helloStr = hello.toString().slice(14)
+  var boundStr = ee.toString().slice(14) // () { [native code] }
+
+  test.notStrictEqual(helloStr, boundStr)
   done()
 })
