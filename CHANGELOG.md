@@ -1,5 +1,13 @@
 
 
+## 1.0.2 - 2016-03-04
+- Release v1.0.2 / npm@v1.0.2
+- update license year range
+- change travis build versions
+- use `pre-commit`
+- travis `latest-1` branch badge
+- switch to use `get-fn-name`
+
 ## 1.0.1 - 2016-02-26
 - Release v1.0.1 / npm@v1.0.1
 - create the `.toString` method non-enumerable (hidden), using `define-property`
