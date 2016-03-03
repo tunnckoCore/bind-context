@@ -1,5 +1,9 @@
 
 
+## 2.0.1 - 2016-03-03
+- Release v2.0.1 / npm@v2.0.1
+- use `get-fn-name` package
+
 ## 2.0.0 - 2016-03-03
 - Release v2.0.0 / npm@v2.0.0
 - allow failures on node 0.10 and 0.12 (see [#c2b1fe comment](https://github.com/tunnckoCore/bind-context/commit/c2b1fe0d52b35a17a0c55938a2e81b8a47573a89#commitcomment-16482077))
