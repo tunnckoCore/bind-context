@@ -75,8 +75,8 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 [codeclimate-url]: https://codeclimate.com/github/tunnckoCore/bind-context
 [codeclimate-img]: https://img.shields.io/codeclimate/github/tunnckoCore/bind-context.svg
 
-[travis-url]: https://travis-ci.org/tunnckoCore/bind-context
-[travis-img]: https://img.shields.io/travis/tunnckoCore/bind-context.svg
+[travis-url]: https://travis-ci.org/tunnckoCore/bind-context/branches
+[travis-img]: https://img.shields.io/travis/tunnckoCore/bind-context/latest-1.svg
 
 [coveralls-url]: https://coveralls.io/r/tunnckoCore/bind-context
 [coveralls-img]: https://img.shields.io/coveralls/tunnckoCore/bind-context.svg
