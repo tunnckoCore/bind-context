@@ -7,7 +7,7 @@
 
 'use strict'
 
-var fnName = require('fn-name')
+var fnName = require('get-fn-name')
 var define = require('define-property')
 var format = require('util').format
 var Func = Function // suppress `eslint`, `jshint` and etc

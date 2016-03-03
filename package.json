@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "define-property": "^0.2.5",
-    "fn-name": "^2.0.1"
+    "get-fn-name": "^1.0.0"
   },
   "devDependencies": {
     "assertit": "^0.1.0"
