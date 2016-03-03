@@ -4,6 +4,7 @@
   "description": "Bind context to the given function and preserves her name. Or set new name of the given function. It also handles `.toString` correctly.",
   "repository": "tunnckoCore/bind-context",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "precommit.silent": true,
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -14,7 +15,8 @@
     "get-fn-name": "^1.0.0"
   },
   "devDependencies": {
-    "assertit": "^0.1.0"
+    "assertit": "^0.1.0",
+    "pre-commit": "^1.1.2"
   },
   "keywords": [
     "bind",
