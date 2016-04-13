@@ -7,11 +7,8 @@
 
 'use strict'
 
-var namify = require('namify')
-var fnName = require('get-fn-name')
-var define = require('define-property')
 var format = require('util').format
-var Functi = Function // suppress `eslint`, `jshint` and etc
+var utils = require('./utils')
 
 /**
  * > Bind context to a function and preserve her name.
@@ -55,13 +52,13 @@ module.exports = function bindContext (ctx, fn, name) {
   if (typeof fn !== 'function') {
     throw new TypeError('bind-context expect a function')
   }
-  name = name || fnName(fn) || 'anonymous'
-  name = namify(name)
+  name = name || utils.name(fn) || 'anonymous'
+  name = utils.namify(name)
 
   var str = format('return function %s(){return fn.apply(this,arguments)}', name)
-  var func = (new Functi('fn', str))(fn.bind(ctx))
+  var func = (new Function('fn', str))(fn.bind(ctx)) // eslint-disable-line no-new-func
 
-  define(func, 'toString', function toString () {
+  utils.define(func, 'toString', function toString () {
     var named = format('function %s(', name)
     return fn.toString().replace(/^function .*?\(/, named)
   })
