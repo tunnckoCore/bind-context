@@ -11,10 +11,7 @@
     "test": "standard && node test.js"
   },
   "dependencies": {
-    "define-property": "^0.2.5",
-    "get-fn-name": "^1.0.0",
-    "lazy-cache": "^1.0.3",
-    "namify": "^0.1.3"
+    "rename-function": "^1.0.5"
   },
   "devDependencies": {
     "assertit": "^0.1.0",
@@ -63,13 +60,12 @@
     ],
     "related": {
       "list": [
-        "useware",
-        "useware-context",
-        "async-control",
         "parse-function",
-        "letta",
-        "relike",
-        "function-equal"
+        "rename-function",
+        "function-arguments",
+        "function-equal",
+        "get-fn-name",
+        "smart-bind"
       ]
     }
   }

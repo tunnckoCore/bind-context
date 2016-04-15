@@ -7,8 +7,7 @@
 
 'use strict'
 
-var format = require('util').format
-var utils = require('./utils')
+var rename = require('rename-function')
 
 /**
  * > Bind context to a function and preserve her name.
@@ -20,7 +19,7 @@ var utils = require('./utils')
  * var bindContext = require('bind-context')
  *
  * function hello () {
- *   // `this` context is `{foo: 'bar'}`
+ *   // `this` context is `{foo: 'zzz'}`
  *   return this.foo
  * }
  *
@@ -49,19 +48,5 @@ module.exports = function bindContext (ctx, fn, name) {
   ctx = typeof ctx === 'object' ? ctx : this
   name = typeof name === 'string' ? name : false
 
-  if (typeof fn !== 'function') {
-    throw new TypeError('bind-context expect a function')
-  }
-  name = name || utils.name(fn) || 'anonymous'
-  name = utils.namify(name)
-
-  var str = format('return function %s(){return fn.apply(this,arguments)}', name)
-  var func = (new Function('fn', str))(fn.bind(ctx)) // eslint-disable-line no-new-func
-
-  utils.define(func, 'toString', function toString () {
-    var named = format('function %s(', name)
-    return fn.toString().replace(/^function .*?\(/, named)
-  })
-
-  return func
+  return rename(fn, name, ctx)
 }

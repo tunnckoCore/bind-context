@@ -16,7 +16,7 @@ npm i bind-context --save
 const bindContext = require('bind-context')
 ```
 
-### [bindContext](index.js#L49)
+### [bindContext](index.js#L45)
 > Bind context to a function and preserve her name.
 
 **Params**
@@ -63,13 +63,12 @@ bindContext(Function, String)  // changes name (no context, saves Function's con
 ```
 
 ## Related
-* [async-control](https://www.npmjs.com/package/async-control): Ultimate asynchronous control flow goodness with built-in hook system and compose,… [more](https://www.npmjs.com/package/async-control) | [homepage](https://github.com/hybridables/async-control)
+* [function-arguments](https://www.npmjs.com/package/function-arguments): Get arguments of a function, useful for and used in dependency… [more](https://www.npmjs.com/package/function-arguments) | [homepage](https://github.com/tunnckocore/function-arguments)
 * [function-equal](https://www.npmjs.com/package/function-equal): Compares two functions, are they equal? Checks their names, bodies and… [more](https://www.npmjs.com/package/function-equal) | [homepage](https://github.com/tunnckocore/function-equal)
-* [letta](https://www.npmjs.com/package/letta): Let's move to promises! Drop-in replacement for `co@4` (passing 100% tests),… [more](https://www.npmjs.com/package/letta) | [homepage](https://github.com/hybridables/letta)
+* [get-fn-name](https://www.npmjs.com/package/get-fn-name): Get function name with strictness and correctness in mind. Also works… [more](https://www.npmjs.com/package/get-fn-name) | [homepage](https://github.com/tunnckocore/get-fn-name)
 * [parse-function](https://www.npmjs.com/package/parse-function): Parse a function, arrow function or string to object with name,… [more](https://www.npmjs.com/package/parse-function) | [homepage](https://github.com/tunnckocore/parse-function)
-* [relike](https://www.npmjs.com/package/relike): Simple promisify a callback-style function with sane defaults. Support promisify-ing sync… [more](https://www.npmjs.com/package/relike) | [homepage](https://github.com/hybridables/relike)
-* [useware](https://www.npmjs.com/package/useware): Accept Arguments object or multiple arguments that can be any value,… [more](https://www.npmjs.com/package/useware) | [homepage](https://github.com/tunnckocore/useware)
-* [useware-context](https://www.npmjs.com/package/useware-context): Much like `useware`, but with the ability to bind given context… [more](https://www.npmjs.com/package/useware-context) | [homepage](https://github.com/tunnckocore/useware-context)
+* [rename-function](https://www.npmjs.com/package/rename-function): Rename a given function. Tries to be cross-platform and guaranteed. Useful… [more](https://www.npmjs.com/package/rename-function) | [homepage](https://github.com/tunnckocore/rename-function)
+* [smart-bind](https://www.npmjs.com/package/smart-bind): Smarter binding of function with some context. It uses .apply instead… [more](https://www.npmjs.com/package/smart-bind) | [homepage](https://github.com/tunnckocore/smart-bind)
 
 ## Contributing
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/tunnckoCore/bind-context/issues/new).  
@@ -79,9 +78,7 @@ But before doing anything, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 [![tunnckoCore.tk][author-www-img]][author-www-url] [![keybase tunnckoCore][keybase-img]][keybase-url] [![tunnckoCore npm][author-npm-img]][author-npm-url] [![tunnckoCore twitter][author-twitter-img]][author-twitter-url] [![tunnckoCore github][author-github-img]][author-github-url]
 
-[define-property]: https://github.com/jonschlinkert/define-property
-[fn-name]: https://github.com/sindresorhus/fn-name
-[namify]: https://github.com/jonschlinkert/namify
+[rename-function]: https://github.com/tunnckocore/rename-function
 
 [npmjs-url]: https://www.npmjs.com/package/bind-context
 [npmjs-img]: https://img.shields.io/npm/v/bind-context.svg?label=bind-context

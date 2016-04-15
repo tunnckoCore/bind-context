@@ -10,8 +10,8 @@
 'use strict'
 
 var test = require('assertit')
-var bindContext = require('./index')
 var util = require('util')
+var bindContext = require('./index')
 
 function hello (a) {
   // `this` context is `{foo: 'bar'}`
@@ -23,7 +23,7 @@ test('should throw TypeError if not a function', function (done) {
     bindContext(123)
   }
   test.throws(fixture, TypeError)
-  test.throws(fixture, /expect a function/)
+  test.throws(fixture, /expect `fn` be function/)
   done()
 })
 
@@ -85,9 +85,9 @@ test('should work for anonymous function', function (done) {
   var ww = bindContext(function () {})
 
   test.strictEqual(typeof ww, 'function')
-  test.strictEqual(util.inspect(ww), '[Function: anonymous]')
+  test.strictEqual(util.inspect(ww), '[Function]')
   test.strictEqual(ww(), undefined)
-  test.strictEqual(ww.name, 'anonymous')
+  test.strictEqual(ww.name, '')
   done()
 })
 
