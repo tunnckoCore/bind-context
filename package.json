@@ -1,6 +1,6 @@
 {
   "name": "bind-context",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Bind context to a function and preserves her name. Can be used to change name of a function. The toString also works correctly.",
   "repository": "tunnckoCore/bind-context",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",

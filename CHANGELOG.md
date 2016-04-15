@@ -1,5 +1,10 @@
 
 
+## 2.0.2 - 2016-04-15
+- Release v2.0.2 / npm@v2.0.2
+- fix failing test: does not set name of anonymous function to `anonymous` as previously (may breaking)
+- refactor, use `rename-function`
+
 ## 2.0.1 - 2016-03-03
 - Release v2.0.1 / npm@v2.0.1
 - use `get-fn-name` package
